@@ -264,6 +264,7 @@ class AsyncOBS:
             if package
             else f"{self.url}/source/{project}"
         )
+        print('exists', url)
         async with self.client.head(url) as resp:
             return resp.status != 404
 
@@ -275,6 +276,7 @@ class AsyncOBS:
             if package
             else f"{self.url}/source/{project}"
         )
+        print(url)
         async with self.client.head(url) as resp:
             return resp.status != 401
 
@@ -1119,7 +1121,7 @@ async def export(args, config):
         sys.exit(-1)
 
     if not await obs.exists(project, package):
-        print("Project or package not found in build service")
+        print("Project {} or package {} not found in build service".format(project, package))
         sys.exit(-1)
 
     git = Git(repository, config["git"]["prefix"])
